@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Train Station</title>
+
+<!--jQuery-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Bootstrap Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Bootstrap Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<!--Firebase below-->
+<script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js">
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyA9kBWbh2nNfbPB5h9bFzdOp1bZk6C066A",
+    authDomain: "practice3-dc4eb.firebaseapp.com",
+    databaseURL: "https://practice3-dc4eb.firebaseio.com",
+    projectId: "practice3-dc4eb",
+    storageBucket: "practice3-dc4eb.appspot.com",
+    messagingSenderId: "429070812573"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script src="./assets/apps.js"></script>
+
+</head>
+<body>
+    <form>
+        <span id="train-items">Train arrivals<input id="input1" type="text"><input id="add train" value="text" type="submit"></span>
+    </form>
+
+</body>
+</html>
