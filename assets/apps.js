@@ -13,6 +13,11 @@ $(document).ready(function(){
 
         //Get the to-do (write-train) value from the text box and store it in a var
         var writeTrainTask = $("#write-train").val().trim();
+
+        //variable that will hold a <p> tag
+        var trainItem = $("<p>");
+
+        trainItem.attr("id", "item-" + addTrain);
     })
 
 });
