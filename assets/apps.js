@@ -19,7 +19,7 @@ $(document).ready(function(){
         //give var id in folloing form where number is equal to addTrain count
         trainItem.attr("id", "item-" + addTrain);
         //append the writeTrainTask value as text to the p element 
-        trainItem.append("" + writeTrainTask);
+        trainItem.append("" + writeTrainTask);  
 
         //create button with checkbox
         var toDoDone = $("<button>");
@@ -29,9 +29,20 @@ $(document).ready(function(){
         toDoDone.append("✓");
 
         //append t train item
+        trainItem = trainItem.prepend(toDoDone);    
 
         // add to do item to to-do div
-        $("#add-train").append(addTrain);
+        $("#place-train").append(trainItem);
+
+        //clear textbox when finished
+        $("write-train").val("");
+
+        //add addTrain count
+        addTrain++;
+    });
+
+    $(document.body).on("click", function(){
+        var addTrainNumber =$(this).attr("data-to-do");
     })
 
 }); 
