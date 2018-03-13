@@ -9,6 +9,12 @@ $(document).ready(function(){
     //on click event associated with to-do function
     //this is the id in HTML
     $("#add-train").on("click", function(event){
+
+        //add 1 to clickCounter
+        clickCounter++;
+        database.ref().set({
+            clickCount: clickCounter
+        });
         event.preventDefault();
 
         //Get the to-do (write-train) value from the text box and store it in a var
