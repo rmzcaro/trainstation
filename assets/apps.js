@@ -1,5 +1,3 @@
-// Make input form including button 
-// make divs when new input is created 
 
 $(document).ready(function(){
     // console.log("ya se armo")
@@ -11,10 +9,31 @@ $(document).ready(function(){
     $("#add-train").on("click", function(event){
 
         //add 1 to clickCounter
-        clickCounter++;
+        addTrain++;
+        // refers to root object Firebase 
+        //firebase.database
         database.ref().set({
-            clickCount: clickCounter
+            // click count is created as a key on database
+            //key can be called anything
+            // when setting I am telling db 
+            clickCount: addTrain
         });
+
+        //we are listening to changes in value anywhere in database run this function
+        database.ref().on("value",function
+        (snapshot){
+
+            //callback function
+            //if you try to access snap we'll get a promise
+            //to get the object we use snapshot.val
+            console.log(snapshot.val());
+
+            $("click-value").text(snapshot.val()
+            .clickCount);
+
+            addTrain = snapshot.val().clickCount;
+        })
+
         event.preventDefault();
 
         //Get the to-do (write-train) value from the text box and store it in a var
