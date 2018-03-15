@@ -1,22 +1,32 @@
 
 $(document).ready(function(){
     // console.log("ya se armo")
-    //Create an initial count varible
-    var addTrain = 0;
+    //Create an initial count variable
+    // var addTrain = 0;
+
+    //Initial Values 
+    var name = "";
 
     //on click event associated with to-do function
     //this is the id in HTML
     $("#add-train").on("click", function(event){
-
+        //don't refresh page
+        event.preventDefault();
+        
         //add 1 to clickCounter
-        addTrain++;
+        // addTrain++;
+
+        //logic for storing and retrieving the most recent user
+        name = $("name-input").val().trim();
+
         // refers to root object Firebase 
         //firebase.database
         database.ref().set({
             // click count is created as a key on database
             //key can be called anything
             // when setting I am telling db 
-            clickCount: addTrain
+            // clickCount: addTrain
+            name:name,
         });
 
         //we are listening to changes in value anywhere in database run this function
@@ -28,11 +38,19 @@ $(document).ready(function(){
             //to get the object we use snapshot.val
             console.log(snapshot.val());
 
-            $("click-value").text(snapshot.val()
-            .clickCount);
+            //click counter from database
+            dbClickCount = snapshot.val().clickCount;
 
-            addTrain = snapshot.val().clickCount;
-        })
+            //store info and others can access info
+            $("click-value").text(dbClickCount);
+
+            addTrain = dbClickCount;
+
+            //catches an error or exception
+        }, function(errorObject) {
+            console.log("The read failed: " + 
+            errorObject.code);
+        });
 
         event.preventDefault();
 
