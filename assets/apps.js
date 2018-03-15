@@ -36,23 +36,20 @@ $(document).ready(function(){
     });
 
         //we are listening to changes in value anywhere in database run this function
-        database.ref().on("child_added", function(childSnapshot, prevChildKey) {
+        database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
+            
+            //storing in var for covenience
+            var sv = snapshot.val();
 
             //callback function
             //if you try to access snap we'll get a promise
             //to get the object we use snapshot.val
             // console.log(snapshot.val());
-            console.log(childsnapshot.val());
-
-            //store everything into variable
-            var trainName = childSnapshot.val().name;
-
-            // train info 
-            console.log(trainName);
+            console.log(sv.train);
 
             //store info and others can access info
             //change HTML to reflect
-            $("#recent-train").text(snapshot.val().train);
+            $("#train-display").text(sv.train);
 
             //catches an error or exception
         }, function(errorObject) {
