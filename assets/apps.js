@@ -31,8 +31,7 @@ $(document).ready(function(){
         });
 
         //clears text-boxes
-        //Not sure if needed 
-        $("train-input").val("");
+        $("#train-input").val("");
     });
 
         //we are listening to changes in value anywhere in database run this function
@@ -47,7 +46,7 @@ $(document).ready(function(){
             // console.log(snapshot.val());
             console.log(sv.train);
 
-            //store info and others can access info
+            //store info and others can access it
             //change HTML to reflect
             $("#train-display").text(sv.train);
 
