@@ -17,23 +17,17 @@
 <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
 
 <script>
-// Initialize Firebase
-var config = {
-  apiKey: "AIzaSyAMzAfEuI24PB3FC49Tyizftf9MI1Ry81Q",
-  authDomain: "mytrainstops-f90e2.firebaseapp.com",
-  databaseURL: "https://mytrainstops-f90e2.firebaseio.com",
-  projectId: "mytrainstops-f90e2",
-  storageBucket: "mytrainstops-f90e2.appspot.com",
-  messagingSenderId: "73383004864"
-};
-firebase.initializeApp(config);
-
-  // =========================== VARIABLES 
-  // reference to database, db is abbrev. Creates firebase object 
-  //method called database 
-  var database = firebase.database();
-
-</script>
+        // Initialize Firebase
+        var config = {
+          apiKey: "AIzaSyCYtUgmg9G_WndPjEHrAfjK9xOTuQ8wYKE",
+          authDomain: "train-stops.firebaseapp.com",
+          databaseURL: "https://train-stops.firebaseio.com",
+          projectId: "train-stops",
+          storageBucket: "train-stops.appspot.com",
+          messagingSenderId: "121234440611"
+        };
+        firebase.initializeApp(config);
+      </script>
 
 <script src="./assets/apps.js"></script>
 
@@ -43,20 +37,50 @@ firebase.initializeApp(config);
     <div class="container">
     <!-- Jumbotron -->
     <div class="jumbotron">
-            <h1 class="text-center">Sign-Up Today!</h1>
+            <h1 class="text-center">Train Schedule</h1>
           </div>
+    <div class="row">
+    <!--add train panel --> 
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+         <div class="panel-heading">
+             <h3 class="panel-title">Add Train Here</h3>
+         </div> 
+         <div class="panel-body">
+            <!-- Add train form"-->
+            <form role="form">
+                <div class="form-group">
+                    <!-- from name-input to input id="train-items, better name train-input --> 
+                    <label for="name-input">Train:</label>
+                    <input class="form-control" id="train-input" type="text">
+                </div>
+                    <!-- button id = add train --> 
+                    <button class="btn btn-default" id="add-train" type="submit">Submit</button>
 
-    <!--created input form and button-->
-    <form>
-        <span id="train-items">Train arrivals<input id="write-train" type="text"><input id="add-train" value="text" type="submit"></span>
-    </form>
+            </form>
+            
+         </div> 
 
-    <!--train items-->
-
-    <div id="place-train">
-
+        </div>
+    <!--col class div close --> 
     </div>
 
+    <!--train list -->
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Most recent train</h3>
+            </div>
+        <div class="panel-body" id="recent-train">
+            <h2 id="name-display">Train TrainHere</h2>
+        </div>
+        </div>
+    </div>
+
+    <!--div class "row" div-->
+    </div>
+
+    <!--container div-->
     </div>
 
 </body>

@@ -1,6 +1,5 @@
 
 $(document).ready(function(){
-    // console.log("ya se armo")
     //Create an initial count variable
     // var addTrain = 0;
 
@@ -9,7 +8,7 @@ $(document).ready(function(){
 
     //on click event associated with to-do function
     //this is the id in HTML
-    $("#add-train").on("click", function(event){
+    $("#add-train").on("click", function() {
         //don't refresh page
         event.preventDefault();
         
@@ -17,11 +16,11 @@ $(document).ready(function(){
         // addTrain++;
 
         //logic for storing and retrieving the most recent user
-        name = $("name-input").val().trim();
+        name = $("#train-input").val().trim();
 
         // refers to root object Firebase 
         //firebase.database
-        database.ref().set({
+        database.ref().push({
             // click count is created as a key on database
             //key can be called anything
             // when setting I am telling db 
@@ -29,22 +28,24 @@ $(document).ready(function(){
             name:name,
         });
 
+
         //we are listening to changes in value anywhere in database run this function
-        database.ref().on("value",function
-        (snapshot){
+        database.ref().on("value",function(snapshot) {
 
             //callback function
             //if you try to access snap we'll get a promise
             //to get the object we use snapshot.val
             console.log(snapshot.val());
+            console.log(snapshot.val().name);
 
             //click counter from database
-            dbClickCount = snapshot.val().clickCount;
+            // dbClickCount = snapshot.val().clickCount;
 
             //store info and others can access info
-            $("click-value").text(dbClickCount);
+            //change HTML to reflect
+            $("#name-display").text(snapshot.val().name);
 
-            addTrain = dbClickCount;
+            // addTrain = dbClickCount;
 
             //catches an error or exception
         }, function(errorObject) {
@@ -52,14 +53,12 @@ $(document).ready(function(){
             errorObject.code);
         });
 
-        event.preventDefault();
-
         //Get the to-do (write-train) value from the text box and store it in a var
         var writeTrainTask = $("#write-train").val().trim();
 
         //variable that will hold a <p> tag
         var trainItem = $("<p>");
-        //give var id in folloing form where number is equal to addTrain count
+        //give var id in following form where number is equal to addTrain count
         trainItem.attr("id", "item-" + addTrain);
         //append the writeTrainTask value as text to the p element 
         trainItem.append("" + writeTrainTask);  
