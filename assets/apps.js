@@ -44,6 +44,8 @@ $(document).ready(function(){
         $("#train-input").val("");
         $("#destin-input").val("");
         $("#ftrain-input").val("");
+        $("#freq-input").val("");
+
     });
 
         //we are listening to changes in value anywhere in database run this function
@@ -59,13 +61,15 @@ $(document).ready(function(){
             console.log(sv.train);
             console.log(sv.destin);
             console.log(sv.ftrain);
+            console.log(sv.freq);
+            
 
             //store info and others can access it
             //change HTML to reflect
             $("#train-display").text(sv.train);
             $("#destin-display").text(sv.destin);
             $("#traintime-display").text(sv.ftrain); 
-            $("#frequency-display").text(sv.train); 
+            $("#frequency-display").text(sv.freq); 
             
 
             //catches an error or exception
