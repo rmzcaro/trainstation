@@ -16,6 +16,7 @@ $(document).ready(function(){
         //logic for storing and retrieving the most recent user input
         //grab values from text boxes
         var train = $("#train-input").val().trim();
+        var trainDest= $("#destination-input").val().trim();
 
             //creat local temporary object for holding train data
             // click count is created as a key on database, key can be called anything
@@ -25,13 +26,15 @@ $(document).ready(function(){
 
         // refers to root object Firebase 
         database.ref().push({
-            train: train
+            train: train,
+            trainDest:trainDest
             //add date: 
             // dateAdded:firebase.database.ServerValue.TIMESTAMP
         });
 
         //clears text-boxes
         $("#train-input").val("");
+        $("#destination-input").val("");
     });
 
         //we are listening to changes in value anywhere in database run this function
