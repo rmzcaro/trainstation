@@ -31,7 +31,7 @@ $(document).ready(function(){
             // };
 
         // refers to root object Firebase 
-        firebase.database.ref().push({
+        dataRef.ref().push({
             train: train,
             destin: destin,
             ftrain: ftrain,
@@ -49,7 +49,7 @@ $(document).ready(function(){
     });
 
     //Firebase watcher + intial loader 
-    firebase.database().ref().on("child_added", function(childSnapshot){
+    dataRef.ref().on("child_added", function(childSnapshot){
 
         var csv = childSnapshot.val();
 
@@ -62,7 +62,7 @@ $(document).ready(function(){
         console.log(csv.destin);
         console.log(csv.ftrain);
         console.log(csv.freq);
-        // console.log(csv.joinDate);
+        console.log(csv.dateAdded);
 
         //list of items 
         $("full-train-list").append("<div class='well'><span class='train-name'>" + csv.train +
