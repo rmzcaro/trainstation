@@ -6,6 +6,7 @@ $(document).ready(function(){
 
     //Initial Values 
     var train = "";
+    var destin = "";
 
     //on click event associated with to-do function
     //this is the id in HTML
@@ -16,7 +17,7 @@ $(document).ready(function(){
         //logic for storing and retrieving the most recent user input
         //grab values from text boxes
         var train = $("#train-input").val().trim();
-        var trainDest= $("#destination-input").val().trim();
+        var destin= $("#destin-input").val().trim();
 
             //creat local temporary object for holding train data
             // click count is created as a key on database, key can be called anything
@@ -27,14 +28,14 @@ $(document).ready(function(){
         // refers to root object Firebase 
         database.ref().push({
             train: train,
-            trainDest:trainDest
+            destin:destin
             //add date: 
             // dateAdded:firebase.database.ServerValue.TIMESTAMP
         });
 
         //clears text-boxes
         $("#train-input").val("");
-        $("#destination-input").val("");
+        $("#destin-input").val("");
     });
 
         //we are listening to changes in value anywhere in database run this function
