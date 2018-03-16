@@ -2,12 +2,12 @@ $(document).ready(function(){
     //Create an initial count variable
     // var addTrain = 0;
 
-    var database = firebase.database();
+    var dataRef = firebase.database();
 
     //Initial Values 
     var train = "";
     var destin = "";
-    var ftrain = "";
+    var ftrain = 0;
     var freq = "";
 
     //on click event associated with to-do function
@@ -31,13 +31,13 @@ $(document).ready(function(){
             // };
 
         // refers to root object Firebase 
-        database.ref().push({
+        firebase.database.ref().push({
             train: train,
             destin: destin,
             ftrain: ftrain,
-            freq: freq
-            //add date: 
-            // dateAdded:firebase.database.ServerValue.TIMESTAMP
+            freq: freq,
+            //add date:
+            dateAdded: firebase.database.ServerValue.TIMESTAMP
         });
 
         //clears text-boxes
@@ -48,21 +48,39 @@ $(document).ready(function(){
 
     });
 
-        //we are listening to changes in value anywhere in database run this function
-        database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
-            
-            //storing in var for covenience
-            var sv = snapshot.val();
+    //Firebase watcher + intial loader 
+    firebase.database().ref().on("child_added", function(childSnapshot){
 
-            //callback function
-            //if you try to access snap we'll get a promise
-            //to get the object we use snapshot.val
-            // console.log(snapshot.val());
-            console.log(sv.train);
-            console.log(sv.destin);
-            console.log(sv.ftrain);
-            console.log(sv.freq);
-            
+        var csv = childSnapshot.val();
+
+        //log everything that's coming out of snap
+        //callback function
+        //if you try to access snap we'll get a promise
+        //to get the object we use snapshot.val
+        // console.log(childSnapshot.val());
+        console.log(csv.train);
+        console.log(csv.destin);
+        console.log(csv.ftrain);
+        console.log(csv.freq);
+        // console.log(csv.joinDate);
+
+        //list of items 
+        $("full-train-list").append("<div class='well'><span class='train-name'>" + csv.train +
+        "</span><span class='destination'>" + csv.destin +
+        "</span><span class='ftrain'> "+ csv.ftrain +
+        "</span><span class='frequency'> "+ csv.freq + "</span></div>");
+
+           //catches an error or exception
+        }, function(errorObject) {
+            console.log("The read failed: " + errorObject.code);
+        });
+
+    })
+
+        //we are listening to changes in value anywhere in database run this function
+        firebase.database().ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
+
+            var sv = snapshot.val();
 
             //store info and others can access it
             //change HTML to reflect
@@ -71,10 +89,4 @@ $(document).ready(function(){
             $("#traintime-display").text(sv.ftrain); 
             $("#frequency-display").text(sv.freq); 
             
-
-            //catches an error or exception
-        }, function(errorObject) {
-            console.log("The read failed: " + errorObject.code);
-        });
-
     });
