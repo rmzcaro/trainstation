@@ -1,6 +1,4 @@
 $(document).ready(function(){
-    //Create an initial count variable
-    // var addTrain = 0;
 
     var dataRef = firebase.database();
 
@@ -12,7 +10,7 @@ $(document).ready(function(){
 
     //on click event associated with to-do function
     //this is the id in HTML
-    $("#add-train").on("click", function() {
+    $("#add-train").on("click", function(event) {
         //don't refresh page
         event.preventDefault();
 
@@ -31,6 +29,7 @@ $(document).ready(function(){
             // };
 
         // refers to root object Firebase 
+        // add new train to db
         dataRef.ref().push({
             train: train,
             destin: destin,
@@ -40,13 +39,15 @@ $(document).ready(function(){
             dateAdded: firebase.database.ServerValue.TIMESTAMP
         });
 
+        
+    });
+
         //clears text-boxes
         $("#train-input").val("");
         $("#destin-input").val("");
         $("#ftrain-input").val("");
         $("#freq-input").val("");
 
-    });
 
     //Firebase watcher + intial loader 
     dataRef.ref().on("child_added", function(childSnapshot){
@@ -64,10 +65,10 @@ $(document).ready(function(){
         console.log(csv.freq);
         console.log(csv.dateAdded);
 
-        //list of items 
+        //list of trains 
         $("full-train-list").append("<div class='well'><span class='train-name'>" + csv.train +
-        "</span><span class='destination'>" + csv.destin +
-        "</span><span class='ftrain'> "+ csv.ftrain +
+        "</span><span class='destination>" + csv.destin +
+        "</span><span class='first-train-time'> "+ csv.ftrain +
         "</span><span class='frequency'> "+ csv.freq + "</span></div>");
 
            //catches an error or exception
@@ -84,9 +85,9 @@ $(document).ready(function(){
 
             //store info and others can access it
             //change HTML to reflect
-            $("#train-display").text(sv.train);
-            $("#destin-display").text(sv.destin);
-            $("#traintime-display").text(sv.ftrain); 
-            $("#frequency-display").text(sv.freq); 
+            // $("#train-display").text(sv.train);
+            // $("#destin-display").text(sv.destin);
+            // $("#traintime-display").text(sv.ftrain); 
+            // $("#frequency-display").text(sv.freq); 
             
     });
