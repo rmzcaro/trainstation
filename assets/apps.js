@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function () {
 
     var dataRef = firebase.database();
 
@@ -10,23 +10,23 @@ $(document).ready(function(){
 
     //on click event associated with to-do function
     //this is the id in HTML
-    $("#add-train").on("click", function(event) {
+    $("#add-train").on("click", function (event) {
         //don't refresh page
-        event.preventDefault();
+        // event.preventDefault();
 
         //logic for storing and retrieving the most recent user input
         //grab values from text boxes
         var train = $("#train-input").val().trim();
-        var destin= $("#destin-input").val().trim();
+        var destin = $("#destin-input").val().trim();
         var ftrain = $("#ftrain-input").val().trim();
         var freq = $("#freq-input").val().trim();
-        
 
-            //creat local temporary object for holding train data
-            // click count is created as a key on database, key can be called anything
-            // var newTrain = {
-            //     train:train
-            // };
+
+        //creat local temporary object for holding train data
+        // click count is created as a key on database, key can be called anything
+        // var newTrain = {
+        //     train:train
+        // };
 
         // refers to root object Firebase 
         // add new train to db
@@ -39,18 +39,18 @@ $(document).ready(function(){
             dateAdded: firebase.database.ServerValue.TIMESTAMP
         });
 
-        
+
     });
 
-        //clears text-boxes
-        $("#train-input").val("");
-        $("#destin-input").val("");
-        $("#ftrain-input").val("");
-        $("#freq-input").val("");
+    //clears text-boxes
+    $("#train-input").val("");
+    $("#destin-input").val("");
+    $("#ftrain-input").val("");
+    $("#freq-input").val("");
 
 
     //Firebase watcher + intial loader 
-    dataRef.ref().on("child_added", function(childSnapshot){
+    dataRef.ref().on("child_added", function (childSnapshot) {
 
         var csv = childSnapshot.val();
 
@@ -65,29 +65,36 @@ $(document).ready(function(){
         console.log(csv.freq);
         console.log(csv.dateAdded);
 
-        //list of trains 
-        $("full-train-list").append("<div class='well'><span class='train-name'>" + csv.train +
-        "</span><span class='destination>" + csv.destin +
-        "</span><span class='first-train-time'> "+ csv.ftrain +
-        "</span><span class='frequency'> "+ csv.freq + "</span></div>");
+        //time of first train arrival
+        var firstT = csv.ftrain;
+        var Freq = csv.freq;
 
-           //catches an error or exception
-        }, function(errorObject) {
-            console.log("The read failed: " + errorObject.code);
-        });
+        //time now
+        var currentTime = moment();
 
-    })
+        //diff arrival of train and current time to find minutes away
+        var difTime = moment().diff(moment(firstT), "minutes");
 
-        //we are listening to changes in value anywhere in database run this function
-        firebase.database().ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
+        //time apart
+        var tApart = difTime % Freq;
 
-            var sv = snapshot.val();
+        // time ( in minutes) until the next train arrives
+        var tMinToArrive = Freq - tApart;
 
-            //store info and others can access it
-            //change HTML to reflect
-            // $("#train-display").text(sv.train);
-            // $("#destin-display").text(sv.destin);
-            // $("#traintime-display").text(sv.ftrain); 
-            // $("#frequency-display").text(sv.freq); 
-            
+        //next arrival time 
+        var nextTrain = moment().add(tMinToArrive, "minutes");
+        var nextTrainActual = moment(nextTrain).format("HH:mm a");
+
+        var newRowTrain = "<tr><td>" + csv.train + "</td><td>" + csv.destin + "</td><td>" + csv.freq + "</td><td>" + csv.nextTrainActual +
+            "</td><td>" + csv.tMinToArrive + "</td></tr>"
+        $("#full-train-listing tbody").append(newRowTrain);
+
+        //catches an error or exception
+    }, function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
     });
+
+})
+
+// //we are listening to changes in value anywhere in database run this function
+// firebase.database().ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function (snapshot) {
